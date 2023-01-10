@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
     public int playerId = -1;
     public bool dead = false, spawned = false;
     public Enums.PowerupState state = Enums.PowerupState.Small, previousState;
-    public float slowriseGravity = 0.85f, normalGravity = 2.5f, flyingGravity = 0.8f, flyingTerminalVelocity = 1.25f, drillVelocity = 7f, groundpoundTime = 0.25f, groundpoundVelocity = 10, blinkingSpeed = 0.25f, terminalVelocity = -7f, jumpVelocity = 6.25f, megaJumpVelocity = 16f, launchVelocity = 12f, wallslideSpeed = -4.25f, giantStartTime = 1.5f, soundRange = 10f, slopeSlidingAngle = 12.5f, pickupTime = 0.5f;
+    public float slowriseGravity = 0.85f, normalGravity = 2.5f, flyingGravity = 0.8f, flyingTerminalVelocity = 1.25f, drillVelocity = 7f, groundpoundTime = 0.25f, groundpoundVelocity = 10, blinkingSpeed = 0.25f, terminalVelocity = -7f, jumpVelocity = 6.25f, megaJumpVelocity = 16f, launchVelocity = 12f, wallslideSpeed = -4.25f, giantStartTime = 1.5f, soundRange = 10f, slopeSlidingAngle = 12.5f, pickupTime = 0.5f, skiddingThreshold = 4.6875f, skiddingDecel = 0.17578125f, skiddingStarDecel = 1.40625f, skiddingIceDecel = 0.06591796875f;
     public float propellerLaunchVelocity = 6, propellerFallSpeed = 2, propellerSpinFallSpeed = 1.5f, propellerSpinTime = 0.75f, propellerDrillBuffer, heightSmallModel = 0.42f, heightLargeModel = 0.82f;
 
     BoxCollider2D[] hitboxes;
@@ -52,9 +52,6 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
     private static readonly float[] SPEED_STAGE_ACC = { 0.131835975f, 0.06591802875f, 0.05859375f, 0.0439453125f, 1.40625f };
     private static readonly float[] WALK_TURNAROUND_ACC = { 0.0659179686f, 0.146484375f, 0.234375f };
     private static readonly float BUTTON_RELEASE_DEC = 0.0659179686f;
-    private static readonly float SKIDDING_THRESHOLD = 4.6875f;
-    private static readonly float SKIDDING_DEC = 0.17578125f;
-    private static readonly float SKIDDING_STAR_DEC = 1.40625f;
 
     private static readonly float WALLJUMP_HSPEED = 4.21874f;
     private static readonly float WALLJUMP_VSPEED = 6.4453125f;
@@ -73,7 +70,6 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
     private int turnaroundBoostFrames;
 
     private static readonly float[] BUTTON_RELEASE_ICE_DEC = { 0.00732421875f, 0.02471923828125f, 0.02471923828125f, 0.02471923828125f, 0.02471923828125f };
-    private static readonly float SKIDDING_ICE_DEC = 0.06591796875f;
     private static readonly float WALK_TURNAROUND_ICE_ACC = 0.0439453125f;
 
     private static readonly float SLIDING_45_ACC = 0.2197265625f;
@@ -2170,18 +2166,18 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
             if (reverse) {
                 turnaround = false;
                 if (onGround) {
-                    if (speed >= SKIDDING_THRESHOLD && !holding && state != Enums.PowerupState.MegaMushroom) {
+                    if (speed >= skiddingThreshold && !holding && state != Enums.PowerupState.MegaMushroom) {
                         skidding = true;
                         facingRight = sign == 1;
                     }
 
                     if (skidding) {
                         if (onIce) {
-                            acc = SKIDDING_ICE_DEC;
+                            acc = skiddingIceDecel;
                         } else if (speed > SPEED_STAGE_MAX[RUN_STAGE]) {
-                            acc = SKIDDING_STAR_DEC;
+                            acc = skiddingStarDecel;
                         }  else {
-                            acc = SKIDDING_DEC;
+                            acc = skiddingDecel;
                         }
                         turnaroundFrames = 0;
                     } else {
