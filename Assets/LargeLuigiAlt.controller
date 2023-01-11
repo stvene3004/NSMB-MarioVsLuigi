@@ -4937,7 +4937,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -483726293617546318, guid: 024ceb223bceebd488dbc425555f4df0,
+  m_Motion: {fileID: -6118267490169541535, guid: 024ceb223bceebd488dbc425555f4df0,
     type: 3}
   m_Tag: 
   m_SpeedParameter: velocityX
@@ -5234,7 +5234,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: LargeMario
+  m_Name: LargeLuigiAlt
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: velocityX
@@ -8204,7 +8204,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 6318309594519002548, guid: 024ceb223bceebd488dbc425555f4df0,
+  m_Motion: {fileID: -2475625046873759203, guid: 024ceb223bceebd488dbc425555f4df0,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -10291,7 +10291,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: falling
-  m_Speed: 0.2
+  m_Speed: 3
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -483187633061964495}
@@ -10310,11 +10310,11 @@ AnimatorState:
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
   m_Mirror: 0
-  m_SpeedParameterActive: 0
+  m_SpeedParameterActive: 1
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 3234907859589691996, guid: 024ceb223bceebd488dbc425555f4df0,
+  m_Motion: {fileID: -6118267490169541535, guid: 024ceb223bceebd488dbc425555f4df0,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 10
