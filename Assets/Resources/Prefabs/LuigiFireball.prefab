@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 1493637187516899100}
   - component: {fileID: 7546659253023383375}
   m_Layer: 9
-  m_Name: Fireball
+  m_Name: LuigiFireball
   m_TagString: Fireball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58,10 +58,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   left: 0
   isIceball: 0
-  speed: 6.25
-  bounceHeight: 6.75
-  terminalVelocity: 6.25
-  breakOnTimer: 0
+  speed: 4
+  bounceHeight: 3
+  terminalVelocity: 0
+  breakOnTimer: 1
   breakTimer: 0
 --- !u!212 &1011982274984717419
 SpriteRenderer:
@@ -131,7 +131,7 @@ Rigidbody2D:
   m_Mass: 0.075625
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 4.4
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -198,7 +198,7 @@ Animator:
   m_GameObject: {fileID: 1011982274984717421}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ce75c4329cfe8da41861982ffb54fc32, type: 2}
+  m_Controller: {fileID: 9100000, guid: 1653bd8fab1b36d42b7fa1a4684be308, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

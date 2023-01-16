@@ -8,12 +8,16 @@ public class MarioLoader : MonoBehaviour {
     public float scaleTimer, blinkSpeed = 0.5f;
     private Image image;
     public PlayerData data;
+    private RectTransform rt;
     public void Start() {
         image = GetComponent<Image>();
         data = Utils.GetCharacterData();
+        rt = GetComponent<RectTransform>();
     }
 
-    public void Update() {
+    public void Update()
+    {
+        rt.sizeDelta = new Vector2(image.sprite.bounds.size.x * 300, image.sprite.bounds.size.y * 300);
         int scaleDisplay = scale;
 
         if ((scaleTimer += Time.deltaTime) < 0.5f) {

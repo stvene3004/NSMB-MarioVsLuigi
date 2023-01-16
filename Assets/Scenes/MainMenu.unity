@@ -793,6 +793,8 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Luigi
       m_Image: {fileID: 0}
+    - m_Text: Wario
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -90670,7 +90672,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1141870933}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.7878425
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

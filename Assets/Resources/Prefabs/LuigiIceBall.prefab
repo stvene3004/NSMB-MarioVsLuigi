@@ -14,14 +14,14 @@ GameObject:
   - component: {fileID: 1186833380152900418}
   - component: {fileID: -1769135492019179076}
   - component: {fileID: 1011982274984717418}
-  - component: {fileID: 376300006025663058}
-  - component: {fileID: -3035145909365686512}
   - component: {fileID: 1011982274984717417}
+  - component: {fileID: -3035145909365686512}
+  - component: {fileID: 376300006025663058}
   - component: {fileID: 2269455486527583307}
-  - component: {fileID: 1493637187516899100}
-  - component: {fileID: 7546659253023383375}
+  - component: {fileID: 6091953025159033845}
+  - component: {fileID: 3450170468620705130}
   m_Layer: 9
-  m_Name: Fireball
+  m_Name: LuigiIceBall
   m_TagString: Fireball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -57,11 +57,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   left: 0
-  isIceball: 0
-  speed: 6.25
-  bounceHeight: 6.75
-  terminalVelocity: 6.25
-  breakOnTimer: 0
+  isIceball: 1
+  speed: 4.25
+  bounceHeight: 6
+  terminalVelocity: 0
+  breakOnTimer: 1
   breakTimer: 0
 --- !u!212 &1011982274984717419
 SpriteRenderer:
@@ -101,10 +101,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -755315459
-  m_SortingLayer: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 5353841184698615464, guid: 8b4c76bfff99dba4b90ef29e19c39f48,
+  m_Sprite: {fileID: 5353841184698615464, guid: eddf8ec042b3e614e925d846a27642df,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -131,7 +131,7 @@ Rigidbody2D:
   m_Mass: 0.075625
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 4.4
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -198,7 +198,7 @@ Animator:
   m_GameObject: {fileID: 1011982274984717421}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ce75c4329cfe8da41861982ffb54fc32, type: 2}
+  m_Controller: {fileID: 9100000, guid: bb7d47823597a5b46893ebff0c4c652d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -208,6 +208,31 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &1011982274984717417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1011982274984717421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3460820d6c0f2b045999cb2484247103, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-3035145909365686512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1011982274984717421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 355385f5811a80c4fb2dd412dad21d3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  killTime: 0
 --- !u!114 &376300006025663058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,31 +254,6 @@ MonoBehaviour:
   floorAngle: 0
   currentCollider: {fileID: -1769135492019179076}
   floorAndRoofCutoff: 0.3
---- !u!114 &-3035145909365686512
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1011982274984717421}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 355385f5811a80c4fb2dd412dad21d3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  killTime: 0
---- !u!114 &1011982274984717417
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1011982274984717421}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3460820d6c0f2b045999cb2484247103, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2269455486527583307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,11 +273,11 @@ MonoBehaviour:
   OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 1493637187516899100}
+  - {fileID: 6091953025159033845}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &1493637187516899100
+--- !u!114 &6091953025159033845
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -290,8 +290,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializableViews:
-  - {fileID: 7546659253023383375}
---- !u!114 &7546659253023383375
+  - {fileID: 3450170468620705130}
+--- !u!114 &3450170468620705130
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -369,7 +369,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.022659749}
+  m_Offset: {x: 0, y: 0.05}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -380,7 +380,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.24531952}
+  m_Size: {x: 0.1, y: 0.12}
   m_EdgeRadius: 0
 --- !u!1 &8143467996169431833
 GameObject:
@@ -408,7 +408,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8143467996169431833}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.06, z: 0}
+  m_LocalPosition: {x: 0, y: 0.05, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -424,7 +424,7 @@ ParticleSystem:
   m_GameObject: {fileID: 8143467996169431833}
   serializedVersion: 8
   lengthInSec: 5
-  simulationSpeed: 1
+  simulationSpeed: 3
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
@@ -498,7 +498,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.25
+      scalar: 0.5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -1372,16 +1372,25 @@ ParticleSystem:
           value: 1
           inSlope: 0
           outSlope: 0
-          tangentMode: 34
+          tangentMode: 0
           weightedMode: 0
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
+          time: 0.5978145
+          value: 0.8161924
+          inSlope: -0.9657192
+          outSlope: -0.9657192
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.71575
+        - serializedVersion: 3
           time: 1
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 34
+          value: 0
+          inSlope: -2
+          outSlope: -2
+          tangentMode: 0
           weightedMode: 0
           inWeight: 0
           outWeight: 0
@@ -1690,9 +1699,9 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 0.8705883, g: 0, b: 0, a: 1}
-        key1: {r: 1, g: 0.6784314, b: 0, a: 1}
-        key2: {r: 1, g: 0.9803077, b: 0.3915094, a: 0}
+        key0: {r: 1, g: 1, b: 1, a: 1}
+        key1: {r: 0.4575472, g: 1, b: 0.9822472, a: 1}
+        key2: {r: 0, g: 0.49485117, b: 0.9056604, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
@@ -1869,9 +1878,9 @@ ParticleSystem:
     uvChannelMask: -1
     rowMode: 1
     sprites:
-    - sprite: {fileID: -1737155869, guid: 8b4c76bfff99dba4b90ef29e19c39f48, type: 3}
-    - sprite: {fileID: -1295335873, guid: 8b4c76bfff99dba4b90ef29e19c39f48, type: 3}
-    - sprite: {fileID: 1454502836, guid: 8b4c76bfff99dba4b90ef29e19c39f48, type: 3}
+    - sprite: {fileID: -8077568, guid: eddf8ec042b3e614e925d846a27642df, type: 3}
+    - sprite: {fileID: -2140104179, guid: eddf8ec042b3e614e925d846a27642df, type: 3}
+    - sprite: {fileID: -456267274, guid: eddf8ec042b3e614e925d846a27642df, type: 3}
     flipU: 0
     flipV: 0
   VelocityModule:

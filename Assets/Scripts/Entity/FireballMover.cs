@@ -10,10 +10,17 @@ public class FireballMover : MonoBehaviourPun {
     private Rigidbody2D body;
     private PhysicsEntity physics;
     private bool breakOnImpact;
+    public bool breakOnTimer;
+    public float breakTimer;
 
     public void Start() {
         body = GetComponent<Rigidbody2D>();
         physics = GetComponent<PhysicsEntity>();
+
+        if (breakOnTimer)
+        {
+            breakTimer = 100;
+        } 
 
         object[] data = photonView.InstantiationData;
         left = (bool) data[0];
@@ -40,6 +47,8 @@ public class FireballMover : MonoBehaviourPun {
     private void HandleCollision() {
         physics.UpdateCollisions();
 
+        breakTimer -= 1;
+
         if (physics.onGround && !breakOnImpact) {
             float boost = bounceHeight * Mathf.Abs(Mathf.Sin(physics.floorAngle * Mathf.Deg2Rad)) * 1.25f;
             if (Mathf.Sign(physics.floorAngle) != Mathf.Sign(body.velocity.x))
@@ -49,7 +58,7 @@ public class FireballMover : MonoBehaviourPun {
         } else if (isIceball && body.velocity.y > 1.5f)  {
             breakOnImpact = true;
         }
-        bool breaking = physics.hitLeft || physics.hitRight || physics.hitRoof || (physics.onGround && breakOnImpact);
+        bool breaking = physics.hitLeft || physics.hitRight || physics.hitRoof || (physics.onGround && breakOnImpact) || (breakOnTimer && breakTimer < 0);
         if (photonView && breaking) {
             if (photonView.IsMine)
                 PhotonNetwork.Destroy(gameObject);
