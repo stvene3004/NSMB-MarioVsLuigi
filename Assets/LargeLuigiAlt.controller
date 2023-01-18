@@ -360,7 +360,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: head-pickup
-  m_Speed: 1.5
+  m_Speed: 0.85
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -3875545163017582008}
@@ -3792,7 +3792,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: carry-jump
-  m_Speed: 1
+  m_Speed: 3
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1792894757619045394}
@@ -3805,14 +3805,14 @@ AnimatorState:
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
   m_Mirror: 0
-  m_SpeedParameterActive: 0
+  m_SpeedParameterActive: 1
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 5935752697594525628, guid: 024ceb223bceebd488dbc425555f4df0,
+  m_Motion: {fileID: -4011327478981043815, guid: 024ceb223bceebd488dbc425555f4df0,
     type: 3}
   m_Tag: 
-  m_SpeedParameter: 
+  m_SpeedParameter: 10
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
@@ -7270,7 +7270,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: head-carry-jump
-  m_Speed: 0
+  m_Speed: 3
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 7909987697012380872}
@@ -7282,14 +7282,14 @@ AnimatorState:
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
   m_Mirror: 0
-  m_SpeedParameterActive: 0
+  m_SpeedParameterActive: 1
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 2459589200463975708, guid: 024ceb223bceebd488dbc425555f4df0,
+  m_Motion: {fileID: 7104410011021939564, guid: 024ceb223bceebd488dbc425555f4df0,
     type: 3}
   m_Tag: 
-  m_SpeedParameter: 
+  m_SpeedParameter: 10
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 

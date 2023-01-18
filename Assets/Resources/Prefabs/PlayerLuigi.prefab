@@ -21497,14 +21497,14 @@ MonoBehaviour:
   giantStartTime: 1.5
   soundRange: 10
   slopeSlidingAngle: 12.5
-  pickupTime: 0.45
+  pickupTime: 0.8
   skiddingThreshold: 4.6875
   skiddingDecel: 0.0757813
   skiddingStarDecel: 1.30625
   skiddingIceDecel: 0.05591797
   propellerLaunchVelocity: 5
-  propellerFallSpeed: 2
-  propellerSpinFallSpeed: 1.5
+  propellerFallSpeed: 1.5
+  propellerSpinFallSpeed: 1
   propellerSpinTime: 0.5
   propellerDrillBuffer: 0
   heightSmallModel: 0.42

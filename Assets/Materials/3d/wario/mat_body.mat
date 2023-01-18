@@ -73,7 +73,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Textures:
-        m_Texture: {fileID: 18700000, guid: 703d52e629b2baa4d9a9b8748cf127b6, type: 3}
+        m_Texture: {fileID: 18700000, guid: ff284e0a389b86649ba23115c8fe9589, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -110,7 +110,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _MultiPowerupMaterial: 1
+    - _MultiPowerupMaterial: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 1
@@ -126,8 +126,8 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - MultiplyColor: {r: 1, g: 1, b: 1, a: 0}
-    - OverallsColor: {r: 0, g: 0, b: 0, a: 0}
-    - ShirtColor: {r: 0, g: 0, b: 0, a: 0}
+    - OverallsColor: {r: 1, g: 0, b: 0.906075, a: 0}
+    - ShirtColor: {r: 1, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 0.64, g: 0.64, b: 0.64, a: 0.36}
     - _Color: {r: 0.6399999, g: 0.6399999, b: 0.6399999, a: 0.36}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
