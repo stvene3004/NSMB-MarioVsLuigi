@@ -24,8 +24,8 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
     // == MONOBEHAVIOURS ==
 
     public int playerId = -1;
-    public bool projectileTypeFly, shoulderBash;
-    public float shoulderBashMaxTimer;
+    public bool projectileTypeFly, canShoulderBash;
+    public float shoulderBashMaxTimer, shoulderBash;
     public bool dead = false, spawned = false;
     public Enums.PowerupState state = Enums.PowerupState.Small, previousState;
     public float slowriseGravity = 0.85f, normalGravity = 2.5f, flyingGravity = 0.8f, flyingTerminalVelocity = 1.25f, drillVelocity = 7f, groundpoundTime = 0.25f, groundpoundVelocity = 10, blinkingSpeed = 0.25f, terminalVelocity = -7f, jumpVelocity = 6.25f, megaJumpVelocity = 16f, launchVelocity = 12f, wallslideSpeed = -4.25f, giantStartTime = 1.5f, soundRange = 10f, slopeSlidingAngle = 12.5f, pickupTime = 0.5f, skiddingThreshold = 4.6875f, skiddingDecel = 0.17578125f, skiddingStarDecel = 1.40625f, skiddingIceDecel = 0.06591796875f;
@@ -757,7 +757,7 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
             return;
 
         if (running) { 
-        HandleShoulderBashing(); 
+        shoulderBash = shoulderBashMaxTimer; 
         }
         ActivatePowerupAction();
     }
@@ -2288,12 +2288,26 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
             body.velocity = new(body.velocity.x, 0);
     }
     void HandleShoulderBashing()
-    {   float shoulderBashTimer = 0; 
+    {
+        if ((state <= Enums.PowerupState.Small) || (!canShoulderBash))
+            return; 
+
+        float shoulderBashTimer = 0; Vector2 checkSize = WorldHitboxSize * new Vector2(0.75f, 1.1f);
         animator.enabled = true;
-        animator.Play("jump-invincible");
+        animator.Play("fireball");
         body.velocity = new(SPEED_STAGE_MAX[RUN_STAGE] * 0.9f * (facingRight ? 1 : -1) * (1f - slowdownTimer), body.velocity.y);
-        if (shoulderBashTimer < shoulderBashMaxTimer){
-            shoulderBashTimer += 1; 
+        if (shoulderBashTimer < shoulderBashMaxTimer)
+        {
+            shoulderBashTimer += 1;
+        }
+
+
+        bool tempHitBlock = false;
+        foreach (Vector3Int tile in tilesHitSide)
+        {
+            int temp = InteractWithTile(tile, InteractableTile.InteractionDirection.Up);
+            if (temp != -1)
+                tempHitBlock |= temp == 1;
         }
     }
 
@@ -2748,6 +2762,12 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
         HandleGroundpound();
 
         HandleSliding(up, crouch, left, right);
+
+        if (shoulderBash >= 0)
+        {
+            shoulderBash -= 1;
+            HandleShoulderBashing();
+        }
 
         if (onGround) {
             if (propellerTimer < 0.5f) {

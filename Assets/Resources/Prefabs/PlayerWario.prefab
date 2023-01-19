@@ -10885,8 +10885,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerId: -1
   projectileTypeFly: 0
+  canShoulderBash: 1
+  shoulderBashMaxTimer: 100
   shoulderBash: 0
-  shoulderBashMaxTimer: 0
   dead: 0
   spawned: 0
   state: 0
