@@ -21477,6 +21477,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerId: -1
+  projectileTypeFly: 1
+  canShoulderBash: 0
+  shoulderBashMaxTimer: 0
+  shoulderBashTimer: 0
   dead: 0
   spawned: 0
   state: 0
@@ -21550,7 +21554,7 @@ MonoBehaviour:
   fireballKnockback: 0
   startedSliding: 0
   canShootProjectile: 0
-  projectileTypeFly: 1
+  shoulderBash: 0
   jumpLandingTimer: 0
   landing: 0
   koyoteTime: 0
@@ -21713,7 +21717,7 @@ Animator:
   m_GameObject: {fileID: 8636928217783201362}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 024ceb223bceebd488dbc425555f4df0, type: 3}
-  m_Controller: {fileID: 9100000, guid: fa2b2fc953f5f444291d26193e0ac7fb, type: 2}
+  m_Controller: {fileID: 9100000, guid: 3efdb47cf4a785f49aca3d1c84119d0e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

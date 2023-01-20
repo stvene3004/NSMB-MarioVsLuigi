@@ -196,6 +196,7 @@ public class PlayerAnimationController : MonoBehaviourPun {
         animator.SetBool("facingRight", (left ^ right) ? right : controller.facingRight);
         animator.SetBool("flying", controller.flying);
         animator.SetBool("drill", controller.drill);
+        animator.SetBool("shoulderBash", controller.shoulderBash);
 
         if (photonView.IsMine) {
             //Animation

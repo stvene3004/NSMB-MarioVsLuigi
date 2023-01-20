@@ -10886,8 +10886,8 @@ MonoBehaviour:
   playerId: -1
   projectileTypeFly: 0
   canShoulderBash: 1
-  shoulderBashMaxTimer: 100
-  shoulderBash: 0
+  shoulderBashMaxTimer: 50
+  shoulderBashTimer: 0
   dead: 0
   spawned: 0
   state: 0
@@ -10961,6 +10961,7 @@ MonoBehaviour:
   fireballKnockback: 0
   startedSliding: 0
   canShootProjectile: 0
+  shoulderBash: 0
   jumpLandingTimer: 0
   landing: 0
   koyoteTime: 0
@@ -11015,7 +11016,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cf9d71929a202541b352e506ca0197e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smallAvatar: {fileID: 9000000, guid: e0d3ef6bcff32414dbd34fc6ac031292, type: 3}
+  smallAvatar: {fileID: 9000000, guid: eeee7bef626db364d971473f74060a7d, type: 3}
   largeAvatar: {fileID: 9000000, guid: 380d949943417ef44930009655865a4f, type: 3}
   dust: {fileID: 4824223342336871185}
   sparkles: {fileID: 4824223340723290478}
@@ -11123,7 +11124,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4824223341387914446}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 024ceb223bceebd488dbc425555f4df0, type: 3}
+  m_Avatar: {fileID: 9000000, guid: 380d949943417ef44930009655865a4f, type: 3}
   m_Controller: {fileID: 9100000, guid: fa2b2fc953f5f444291d26193e0ac7fb, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -11478,6 +11479,7 @@ MonoBehaviour:
   - sliding
   - facingRight
   - groundpound
+  - shoulderBash
   animator: {fileID: 2254935152879088866}
 --- !u!1 &4824223342336871188
 GameObject:
