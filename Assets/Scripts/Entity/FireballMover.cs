@@ -112,6 +112,7 @@ public class FireballMover : MonoBehaviourPun {
             }
             break;
         }
+        case "LuigiFireball":
         case "Fireball": {
             FireballMover otherball = collider.gameObject.GetComponentInParent<FireballMover>();
             if (isIceball ^ otherball.isIceball) {

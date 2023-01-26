@@ -757,8 +757,12 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
         if (!powerupButtonHeld)
             return;
 
-        if ((running) && ((onGround) || (!crouching) || (!inShell))) {
-            shoulderBashTimer = shoulderBashMaxTimer;
+        if (running) {
+            if ((onGround) && (!crouching) && (!inShell)) {
+                shoulderBashTimer = shoulderBashMaxTimer;
+            } else {
+                return;
+            }
         }
         ActivatePowerupAction();
     }
@@ -2291,7 +2295,7 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
     }
     void HandleShoulderBashing()
     {
-        if ((state <= Enums.PowerupState.Small) || (!canShoulderBash) || (shoulderBash == false) || (shoulderBashTimer <= 0) || (!onGround) || (crouching))
+        if ((state <= Enums.PowerupState.Small) || (!canShoulderBash) || (shoulderBash == false) || (shoulderBashTimer <= 0) || (crouching))
             return;
 
         body.velocity = new(SPEED_STAGE_MAX[RUN_STAGE] * 0.9f * (facingRight ? 1 : -1) * (1f - slowdownTimer), body.velocity.y);
@@ -2502,6 +2506,12 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
         body.position = newPosition;
     }
 
+    public virtual void BashRebound()
+    {
+        shoulderBash = false;
+        shoulderBashTimer = 0;
+        body.velocity = new(-3 * (facingRight ? 1 : -1), 5);
+    }
     private void HandleMovement(float delta) {
         functionallyRunning = running || state == Enums.PowerupState.MegaMushroom || propeller;
 
@@ -2521,30 +2531,6 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
                 body.velocity = Vector2.zero;
                 return;
             }
-        }
-
-        if (shoulderBash)
-        {
-            skidding = false;
-            crouching = false;
-            inShell = false;
-            if (!onGround)
-            {
-                shoulderBash = false;
-                shoulderBashTimer = 0;
-            }
-
-            bool tempHitBlock = false;
-            foreach (Vector3Int tile in tilesHitSide)
-            {
-                int temp = InteractWithTile(tile, InteractableTile.InteractionDirection.Up);
-                if (temp != -1)
-                    tempHitBlock |= temp == 1;
-                    shoulderBash = false;
-                    shoulderBashTimer = 0;
-                    body.velocity = new(-3 * (facingRight ? 1 : -1), 5);
-            }
-
         }
 
         if (photonView.IsMine && holding && (holding.dead || Frozen || holding.Frozen))
@@ -2774,14 +2760,31 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
 
         HandleSliding(up, crouch, left, right);
 
+        //shoulder bash
         if (shoulderBashTimer > 0)
         {
             shoulderBashTimer -= 1;
             shoulderBash = true;
         } else if (shoulderBashTimer <= 0) { shoulderBash = false; }
 
-        if (shoulderBash == true) { 
+        if (shoulderBash)
+        {
             HandleShoulderBashing();
+            skidding = false;
+            crouching = false;
+            inShell = false;
+
+            if ((groundpound) || (propeller) || (inShell) || (state == Enums.PowerupState.BlueShell)) { shoulderBash = false; shoulderBashTimer = 0; }
+
+            bool tempHitBlock = false;
+            foreach (Vector3Int tile in tilesHitSide)
+            {
+                int temp = InteractWithTile(tile, InteractableTile.InteractionDirection.Up);
+                if (temp != -1)
+                    tempHitBlock |= temp == 1;
+                    BashRebound();
+            }
+
         }
 
         if (onGround) {
