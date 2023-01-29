@@ -25,7 +25,8 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
 
     public int playerId = -1;
     public bool projectileTypeFly, canShoulderBash;
-    public float shoulderBashMaxTimer, shoulderBashTimer;
+    public float shoulderBashMaxTimer;
+    private float shoulderBashTimer;
     public bool dead = false, spawned = false;
     public Enums.PowerupState state = Enums.PowerupState.Small, previousState;
     public float slowriseGravity = 0.85f, normalGravity = 2.5f, flyingGravity = 0.8f, flyingTerminalVelocity = 1.25f, drillVelocity = 7f, groundpoundTime = 0.25f, groundpoundVelocity = 10, blinkingSpeed = 0.25f, terminalVelocity = -7f, jumpVelocity = 6.25f, megaJumpVelocity = 16f, launchVelocity = 12f, wallslideSpeed = -4.25f, giantStartTime = 1.5f, soundRange = 10f, slopeSlidingAngle = 12.5f, pickupTime = 0.5f, skiddingThreshold = 4.6875f, skiddingDecel = 0.17578125f, skiddingStarDecel = 1.40625f, skiddingIceDecel = 0.06591796875f;
@@ -486,6 +487,19 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
                     return;
                 }
 
+                if (shoulderBash && !other.shoulderBash)
+                {
+                    if (other.state == Enums.PowerupState.MegaMushroom)
+                    {
+                        photonView.RPC(nameof(Knockback), RpcTarget.All, otherObj.transform.position.x > body.position.x, 1, true, otherView.ViewID);
+                        return;
+                    }
+                    else
+                    {
+                        BashRebound();
+                        otherView.RPC(nameof(Knockback), RpcTarget.All, otherObj.transform.position.x < body.position.x, 1, true, photonView.ViewID);
+                    }
+                }
                 float dot = Vector2.Dot((body.position - other.body.position).normalized, Vector2.up);
                 bool above = dot > 0.7f;
                 bool otherAbove = dot < -0.7f;
@@ -569,12 +583,13 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
                     body.velocity = new Vector2(previousFrameVelocity.x, body.velocity.y);
 
                     return;
-                } else if (!knockback && !other.knockback && !otherAbove && onGround && other.onGround && (Mathf.Abs(previousFrameVelocity.x) > WalkingMaxSpeed || Mathf.Abs(other.previousFrameVelocity.x) > WalkingMaxSpeed)) {
+                } else if (!knockback && !other.knockback && !shoulderBash && !other.shoulderBash && !otherAbove && onGround && other.onGround && (Mathf.Abs(previousFrameVelocity.x) > WalkingMaxSpeed || Mathf.Abs(other.previousFrameVelocity.x) > WalkingMaxSpeed)) {
                     //bump
 
                     otherView.RPC(nameof(Knockback), RpcTarget.All, otherObj.transform.position.x < body.position.x, 1, true, photonView.ViewID);
                     photonView.RPC(nameof(Knockback), RpcTarget.All, otherObj.transform.position.x > body.position.x, 1, true, otherView.ViewID);
                 }
+
             }
             break;
         }
@@ -758,7 +773,7 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
             return;
 
         if (running) {
-            if ((onGround) && (!crouching) && (!inShell)) {
+            if (onGround && !crouching && !inShell && !shoulderBash) {
                 shoulderBashTimer = shoulderBashMaxTimer;
             } else {
                 return;
@@ -1627,6 +1642,8 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
         drill = false;
         body.gravityScale = normalGravity;
         wallSlideLeft = wallSlideRight = false;
+        shoulderBash = false;
+        shoulderBashTimer = 0;
 
         SpawnStars(starsToDrop, false);
         HandleLayerState();
@@ -2149,7 +2166,7 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
         if (!onGround)
             skidding = false;
 
-        if (inShell) {
+        if (inShell || shoulderBash) {
             body.velocity = new(SPEED_STAGE_MAX[RUN_STAGE] * 0.9f * (facingRight ? 1 : -1) * (1f - slowdownTimer), body.velocity.y);
             return;
         }
@@ -2293,14 +2310,6 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
         if (onGround || previousOnGround)
             body.velocity = new(body.velocity.x, 0);
     }
-    void HandleShoulderBashing()
-    {
-        if ((state <= Enums.PowerupState.Small) || (!canShoulderBash) || (shoulderBash == false) || (shoulderBashTimer <= 0) || (crouching))
-            return;
-
-        body.velocity = new(SPEED_STAGE_MAX[RUN_STAGE] * 0.9f * (facingRight ? 1 : -1) * (1f - slowdownTimer), body.velocity.y);
-
-    }
 
     bool HandleStuckInBlock() {
         if (!body || state == Enums.PowerupState.MegaMushroom)
@@ -2438,16 +2447,16 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
 
         if (wallJumpTimer > 0) {
             facingRight = body.velocity.x > 0;
-        } else if (!inShell && !sliding && !skidding && !knockback && !(animator.GetCurrentAnimatorStateInfo(0).IsName("turnaround") || turnaround)) {
+        } else if (!inShell && !shoulderBash && !sliding && !skidding && !knockback && !(animator.GetCurrentAnimatorStateInfo(0).IsName("turnaround") || turnaround)) {
             if (right ^ left)
                 facingRight = right;
         } else if (giantStartTimer <= 0 && giantEndTimer <= 0 && !skidding && !(animator.GetCurrentAnimatorStateInfo(0).IsName("turnaround") || turnaround)) {
             if (knockback || (onGround && state != Enums.PowerupState.MegaMushroom && Mathf.Abs(body.velocity.x) > 0.05f)) {
                 facingRight = body.velocity.x > 0;
-            } else if (((wallJumpTimer <= 0 && !inShell) || giantStartTimer > 0) && (right || left)) {
+            } else if (((wallJumpTimer <= 0 && !inShell && !shoulderBash) || giantStartTimer > 0) && (right || left)) {
                 facingRight = right;
             }
-            if (!inShell && ((Mathf.Abs(body.velocity.x) < 0.5f && crouching) || onIce) && (right || left))
+            if (!inShell && !shoulderBash && ((Mathf.Abs(body.velocity.x) < 0.5f && crouching) || onIce) && (right || left))
                 facingRight = right;
         }
     }
@@ -2511,6 +2520,8 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
         shoulderBash = false;
         shoulderBashTimer = 0;
         body.velocity = new(-3 * (facingRight ? 1 : -1), 5);
+        Vector2 offset = new(MainHitbox.size.x / 2f * (facingRight ? 1 : -1), MainHitbox.size.y / 2f);
+        photonView.RPC(nameof(SpawnParticle), RpcTarget.All, "Prefabs/Particle/WalljumpParticle", body.position + offset, !facingRight ? Vector3.zero : Vector3.up * 180);
     }
     private void HandleMovement(float delta) {
         functionallyRunning = running || state == Enums.PowerupState.MegaMushroom || propeller;
@@ -2769,7 +2780,6 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
 
         if (shoulderBash)
         {
-            HandleShoulderBashing();
             skidding = false;
             crouching = false;
             inShell = false;
@@ -2785,6 +2795,12 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
                     BashRebound();
             }
 
+        }
+
+        if ((state <= Enums.PowerupState.Small) || (!canShoulderBash) || (crouching) || (state == Enums.PowerupState.PropellerMushroom) || (state == Enums.PowerupState.BlueShell) || (state == Enums.PowerupState.MegaMushroom) || (groundpound) || (skidding) || (turnaround))
+        {
+            shoulderBash = false;
+            shoulderBashTimer = 0;
         }
 
         if (onGround) {
@@ -3043,7 +3059,7 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
     }
 
     public bool CanPickup() {
-        return state != Enums.PowerupState.MiniMushroom && !skidding && !turnaround && !holding && running && !propeller && !flying && !crouching && !dead && !wallSlideLeft && !wallSlideRight && !doublejump && !triplejump && !groundpound;
+        return state != Enums.PowerupState.MiniMushroom && !skidding && !turnaround && !holding && running && !propeller && !flying && !crouching && !dead && !wallSlideLeft && !wallSlideRight && !doublejump && !triplejump && !groundpound && !shoulderBash;
     }
     void OnDrawGizmos() {
         if (!body)

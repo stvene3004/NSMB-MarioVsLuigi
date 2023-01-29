@@ -133,7 +133,7 @@ public class PlayerAnimationController : MonoBehaviourPun {
         }
 
         //Particles
-        SetParticleEmission(dust, !gameover && (controller.wallSlideLeft || controller.wallSlideRight || (controller.onGround && (controller.skidding || (controller.crouching && Mathf.Abs(body.velocity.x) > 1))) || (controller.sliding && Mathf.Abs(body.velocity.x) > 0.2 && controller.onGround)) && !controller.pipeEntering);
+        SetParticleEmission(dust, !gameover && ((controller.shoulderBash && controller.onGround) || controller.wallSlideLeft || controller.wallSlideRight || (controller.onGround && (controller.skidding || (controller.crouching && Mathf.Abs(body.velocity.x) > 1))) || (controller.sliding && Mathf.Abs(body.velocity.x) > 0.2 && controller.onGround)) && !controller.pipeEntering);
         SetParticleEmission(drillParticle, !gameover && controller.drill);
         if (controller.drill)
             drillParticleAudio.clip = (controller.state == Enums.PowerupState.PropellerMushroom ? propellerDrill : normalDrill);
@@ -161,7 +161,7 @@ public class PlayerAnimationController : MonoBehaviourPun {
         if (controller.cameraController.IsControllingCamera)
             HorizontalCamera.OFFSET_TARGET = (controller.flying || controller.propeller) ? 0.5f : 0f;
 
-        if (controller.crouching || controller.sliding || controller.skidding) {
+        if (controller.crouching || controller.sliding || controller.skidding || controller.shoulderBash) {
             dust.transform.localPosition = Vector2.zero;
         } else if (controller.wallSlideLeft || controller.wallSlideRight) {
             dust.transform.localPosition = new Vector2(mainHitbox.size.x * (3f / 4f) * (controller.wallSlideLeft ? -1 : 1), mainHitbox.size.y * (3f / 4f));

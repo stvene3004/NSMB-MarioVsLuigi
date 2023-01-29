@@ -10887,28 +10887,27 @@ MonoBehaviour:
   projectileTypeFly: 0
   canShoulderBash: 1
   shoulderBashMaxTimer: 50
-  shoulderBashTimer: 0
   dead: 0
   spawned: 0
   state: 0
   previousState: 0
-  slowriseGravity: 1.05
-  normalGravity: 3.25
+  slowriseGravity: 1.2
+  normalGravity: 5
   flyingGravity: 0.8
   flyingTerminalVelocity: 1.40625
   drillVelocity: 7.5
   groundpoundTime: 0.26666668
-  groundpoundVelocity: 11.25
+  groundpoundVelocity: 15
   blinkingSpeed: 0.25
   terminalVelocity: -7.5
-  jumpVelocity: 6.7382812
-  megaJumpVelocity: 12.65625
+  jumpVelocity: 6.6
+  megaJumpVelocity: 11.65625
   launchVelocity: 12
   wallslideSpeed: -4.6875
   giantStartTime: 1.5
   soundRange: 10
   slopeSlidingAngle: 12.5
-  pickupTime: 0.45
+  pickupTime: 0.3
   skiddingThreshold: 4.6875
   skiddingDecel: 0.17578125
   skiddingStarDecel: 1.40625

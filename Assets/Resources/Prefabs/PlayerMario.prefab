@@ -10386,6 +10386,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerId: -1
+  projectileTypeFly: 0
+  canShoulderBash: 0
+  shoulderBashMaxTimer: 0
+  shoulderBashTimer: 0
   dead: 0
   spawned: 0
   state: 0
@@ -10459,7 +10463,7 @@ MonoBehaviour:
   fireballKnockback: 0
   startedSliding: 0
   canShootProjectile: 0
-  projectileTypeFly: 0
+  shoulderBash: 0
   jumpLandingTimer: 0
   landing: 0
   koyoteTime: 0

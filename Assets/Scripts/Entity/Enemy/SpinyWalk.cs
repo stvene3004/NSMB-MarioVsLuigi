@@ -51,10 +51,12 @@ public class SpinyWalk : KoopaWalk {
                             player.bounce = true;
                         } else {
                             //normal mario interactions
-                            if (player.groundpound) {
+                            if (player.groundpound || player.shoulderBash) {
                                 //normal mario is groundpounding, we get kick'd
                                 photonView.RPC("Kick", RpcTarget.All, player.body.position.x < body.position.x, Mathf.Abs(player.body.velocity.x) / player.RunningMaxSpeed, true);
                                 player.photonView.RPC("SetHoldingOld", RpcTarget.All, photonView.ViewID);
+                                if (player.shoulderBash)
+                                    player.BashRebound();
                             } else {
                                 //normal mario isnt groundpounding, we get stopped
                                 photonView.RPC("EnterShell", RpcTarget.All);
