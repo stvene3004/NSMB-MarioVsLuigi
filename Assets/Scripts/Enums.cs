@@ -45,7 +45,7 @@ public static class Enums {
     //Sound effects
     public enum Sounds : byte {
 
-        //CURRENT MAX: 94
+        //CURRENT MAX: 95
 
         //Enemy
         [SoundData("enemy/freeze")]                             Enemy_Generic_Freeze = 0,
@@ -84,6 +84,7 @@ public static class Enums {
         [SoundData("player/slide_end")]                         Player_Sound_SlideEnd = 92,
         [SoundData("player/walljump")]                          Player_Sound_WallJump = 29,
         [SoundData("player/wallslide")]                         Player_Sound_WallSlide = 30,
+        [SoundData("player/bash_sound")]                        Player_Sound_Bash = 95,
 
         [SoundData("player/walk/grass")]                        Player_Walk_Grass = 31,
         [SoundData("player/walk/snow")]                         Player_Walk_Snow = 32,

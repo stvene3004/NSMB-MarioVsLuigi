@@ -773,8 +773,9 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
             return;
 
         if (running) {
-            if (onGround && !crouching && !inShell && !shoulderBash) {
+            if (onGround && !crouching && !inShell && !shoulderBash && !holding) {
                 shoulderBashTimer = shoulderBashMaxTimer;
+                if (!shoulderBash) photonView.RPC(nameof(PlaySound), RpcTarget.All, Enums.Sounds.Player_Sound_Bash);
             } else {
                 return;
             }
@@ -2522,6 +2523,7 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
         body.velocity = new(-3 * (facingRight ? 1 : -1), 5);
         Vector2 offset = new(MainHitbox.size.x / 2f * (facingRight ? 1 : -1), MainHitbox.size.y / 2f);
         photonView.RPC(nameof(SpawnParticle), RpcTarget.All, "Prefabs/Particle/WalljumpParticle", body.position + offset, !facingRight ? Vector3.zero : Vector3.up * 180);
+        photonView.RPC(nameof(PlaySound), RpcTarget.All, Enums.Sounds.World_Block_Bump);
     }
     private void HandleMovement(float delta) {
         functionallyRunning = running || state == Enums.PowerupState.MegaMushroom || propeller;
@@ -3000,6 +3002,8 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
             triplejump = false;
             hitBlock = true;
             sliding = false;
+            shoulderBash = false;
+            shoulderBashTimer = 0;
             body.velocity = Vector2.up * 1.5f;
             groundpoundCounter = groundpoundTime * (state == Enums.PowerupState.MegaMushroom ? 1.5f : 1);
             photonView.RPC(nameof(PlaySound), RpcTarget.All, Enums.Sounds.Player_Sound_GroundpoundStart);
@@ -3059,7 +3063,7 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
     }
 
     public bool CanPickup() {
-        return state != Enums.PowerupState.MiniMushroom && !skidding && !turnaround && !holding && running && !propeller && !flying && !crouching && !dead && !wallSlideLeft && !wallSlideRight && !doublejump && !triplejump && !groundpound && !shoulderBash;
+        return state != Enums.PowerupState.MiniMushroom && !skidding && !turnaround && !holding && running && !propeller && !flying && !crouching && !dead && !wallSlideLeft && !wallSlideRight && !doublejump && !triplejump && !groundpound && !shoulderBash && (shoulderBashTimer == 0);
     }
     void OnDrawGizmos() {
         if (!body)
