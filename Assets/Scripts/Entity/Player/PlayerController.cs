@@ -775,7 +775,7 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
         if (running) {
             if (onGround && !crouching && !inShell && !shoulderBash && !holding) {
                 shoulderBashTimer = shoulderBashMaxTimer;
-                if (!shoulderBash) photonView.RPC(nameof(PlaySound), RpcTarget.All, Enums.Sounds.Player_Sound_Bash);
+                if (!shoulderBash && (!CantShoulderBash())) photonView.RPC(nameof(PlaySound), RpcTarget.All, Enums.Sounds.Player_Sound_Bash);
             } else {
                 return;
             }
@@ -2799,7 +2799,7 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
 
         }
 
-        if ((state <= Enums.PowerupState.Small) || (!canShoulderBash) || (crouching) || (state == Enums.PowerupState.PropellerMushroom) || (state == Enums.PowerupState.BlueShell) || (state == Enums.PowerupState.MegaMushroom) || (groundpound) || (skidding) || (turnaround))
+        if (CantShoulderBash())
         {
             shoulderBash = false;
             shoulderBashTimer = 0;
@@ -3063,7 +3063,10 @@ public class PlayerController : MonoBehaviourPun, IFreezableEntity, ICustomSeria
     }
 
     public bool CanPickup() {
-        return state != Enums.PowerupState.MiniMushroom && !skidding && !turnaround && !holding && running && !propeller && !flying && !crouching && !dead && !wallSlideLeft && !wallSlideRight && !doublejump && !triplejump && !groundpound && !shoulderBash && (shoulderBashTimer == 0);
+        return state != Enums.PowerupState.MiniMushroom && !skidding && !turnaround && !holding && !groundpound && !shoulderBash && (shoulderBashTimer == 0) && running && !propeller && !flying && !crouching && !dead && !wallSlideLeft && !wallSlideRight && !doublejump && !triplejump;
+    }
+    public bool CantShoulderBash() {
+        return ((state <= Enums.PowerupState.Small) || (!canShoulderBash) || (crouching) || (state == Enums.PowerupState.PropellerMushroom) || (state == Enums.PowerupState.BlueShell) || (state == Enums.PowerupState.MegaMushroom) || (groundpound) || (skidding) || (turnaround));
     }
     void OnDrawGizmos() {
         if (!body)

@@ -21480,7 +21480,6 @@ MonoBehaviour:
   projectileTypeFly: 1
   canShoulderBash: 0
   shoulderBashMaxTimer: 0
-  shoulderBashTimer: 0
   dead: 0
   spawned: 0
   state: 0
